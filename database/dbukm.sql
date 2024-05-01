@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 27, 2024 at 04:19 AM
+-- Generation Time: May 01, 2024 at 06:26 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -34,7 +34,7 @@ CREATE TABLE `permintaan` (
   `nama_user` varchar(50) NOT NULL,
   `nim` int(15) NOT NULL,
   `alasan_bergabung` text NOT NULL,
-  `foto_ektm` blob NOT NULL,
+  `foto_ektm` text NOT NULL,
   `tgl_permintaan` date NOT NULL,
   `status` varchar(15) NOT NULL DEFAULT 'menunggu',
   `keterangan` text NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE `permintaan` (
 --
 
 INSERT INTO `permintaan` (`id_permintaan`, `id_user`, `id_ukm`, `nama_user`, `nim`, `alasan_bergabung`, `foto_ektm`, `tgl_permintaan`, `status`, `keterangan`, `tgl_validasi`) VALUES
-('PM001', 'US004', 'UK001', 'Siti Nikmatul', 59, 'ingin menambah relasi', 0x62643931356533326439623866353763373966363430316130663235653563332e6a7067, '2024-04-27', 'menunggu', '', '0000-00-00');
+('PM001', 'US004', 'UK002', 'Siti Nikmatul', 12, 'test', 'user.png', '2024-05-01', 'di terima', 'yes', '2024-05-01');
 
 -- --------------------------------------------------------
 
@@ -57,6 +57,7 @@ INSERT INTO `permintaan` (`id_permintaan`, `id_user`, `id_ukm`, `nama_user`, `ni
 CREATE TABLE `ukm` (
   `id_ukm` varchar(5) NOT NULL,
   `id_user` varchar(5) NOT NULL,
+  `logo` text NOT NULL,
   `nama_ukm` varchar(50) NOT NULL,
   `deskripsi` text NOT NULL,
   `sosialmedia` varchar(100) NOT NULL,
@@ -68,8 +69,9 @@ CREATE TABLE `ukm` (
 -- Dumping data for table `ukm`
 --
 
-INSERT INTO `ukm` (`id_ukm`, `id_user`, `nama_ukm`, `deskripsi`, `sosialmedia`, `status`, `jumlah_anggota`) VALUES
-('UK001', 'US002', 'Futsal', 'UKM Futsal didirikan pada tahun 2003 sebagai wadah untuk mengembangkan minat dan bakat mahasiswa dalam olahraga futsal. Futsal, yang merupakan variasi dari sepak bola, menjadi populer di kalangan mahasiswa karena sifatnya yang kompetitif dan membutuhkan keterampilan teknis yang tinggi.', 'https://www.instagram.com/', 'aktif', 20);
+INSERT INTO `ukm` (`id_ukm`, `id_user`, `logo`, `nama_ukm`, `deskripsi`, `sosialmedia`, `status`, `jumlah_anggota`) VALUES
+('UK001', 'US006', 'voli.jpg', 'Voli', 'test', 'test', 'aktif', 20),
+('UK002', 'US007', 'bola.jpg', 'Futsal', 'test', 'test', 'aktif', 21);
 
 -- --------------------------------------------------------
 
@@ -91,8 +93,10 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id_user`, `nama`, `username`, `password`, `level`) VALUES
 ('US001', 'Super Admin', 'superadmin', '123', 'superadmin'),
-('US002', 'Futsal', 'futsal', '123', 'adminukm'),
-('US004', 'Siti Nikmatul', 'siti', '123', 'user');
+('US004', 'Siti Nikmatul', 'siti', '123', 'user'),
+('US005', 'Syahria', 'Ria', '123', 'user'),
+('US006', 'Voli', 'voli', '123', 'adminukm'),
+('US007', 'Futsal', 'futsal', '123', 'adminukm');
 
 --
 -- Indexes for dumped tables

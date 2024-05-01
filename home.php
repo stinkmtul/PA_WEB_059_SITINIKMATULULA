@@ -151,7 +151,7 @@ elseif ($_SESSION['level'] != 'user' && $_SESSION['level'] != 'adminukm' && $_SE
                     <p>Tentukan dan jelajahi minat Anda dengan bergabung dalam komunitas.</p>
                     <?php 
                         if ($_SESSION['level'] == 'user') {
-                            echo '<a class="btn btn-custom" href="lihatkomunitas.php" role="button">Daftar Sekarang</a>';
+                            echo '<a class="btn btn-custom" href="lihatkomunitas.php" role="button">Daftar Komunitas</a>';
                             echo '&nbsp;&nbsp;';
                             echo '<a class="btn btn-custom" href="komunitasku.php" role="button">Lihat Komunitasku</a>';
                         } elseif ($_SESSION['level'] == 'adminukm') {

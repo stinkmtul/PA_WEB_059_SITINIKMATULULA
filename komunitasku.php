@@ -13,7 +13,7 @@ if ($_SESSION['level'] == "") {
 
 $id_user = $_SESSION['id_user'];
 
-$sqlTampil = mysqli_query($koneksi, "SELECT p.*, u.nama_ukm FROM permintaan p INNER JOIN ukm u ON p.id_ukm = u.id_ukm WHERE p.id_user = '$id_user' and p.status = 'di terima'");
+$sqlTampil = mysqli_query($koneksi, "SELECT p.*, u.nama_ukm, u.logo FROM permintaan p INNER JOIN ukm u ON p.id_ukm = u.id_ukm WHERE p.id_user = '$id_user' and p.status = 'di terima'");
 
 if(mysqli_num_rows($sqlTampil) > 0) {
 ?>
@@ -96,10 +96,11 @@ if(mysqli_num_rows($sqlTampil) > 0) {
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
-                        <img src="img/comunity.png" alt="Logo Komunitas" class="ukm-logo">
+                    <img src="file_komunitas/<?php echo $dataTampil['logo']; ?>" class="img-fluid" alt="logo">
                         <h5 class="ukm-name"><?php echo $dataTampil['nama_ukm']; ?></h5>
-                        <p class="card-text">Nama : <?php echo $dataTampil['nama_user']; ?></p>
+                        <br>
                         <a href="keluarkomunitas.php?id=<?php echo $dataTampil['id_permintaan']; ?>" class="btn btn-danger bi bi-box-arrow-right"> Keluar Komunitas</a>
+                        <br>
                     </div>
                 </div>
             </div>

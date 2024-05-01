@@ -31,17 +31,30 @@ if (isset($_POST['ubah'])) {
 	$deskripsi = $_POST['deskripsi'];
 	$sosialmedia = $_POST['sosialmedia'];
     $statusupdate = $_POST['status'];
+    $logo = $_FILES['logo']['name'];
+    $file_tmp = $_FILES['logo']['tmp_name'];
 
-	$sqlUpdate = mysqli_query($koneksi, "UPDATE ukm SET deskripsi = '$deskripsi',  sosialmedia = '$sosialmedia', status = '$statusupdate' WHERE id_ukm = '$id_ukm'");
+    // Batasi jenis file yang diizinkan
+    $allowed_types = array('jpg', 'jpeg', 'png');
+    $file_extension = strtolower(pathinfo($_FILES['logo']['name'], PATHINFO_EXTENSION));
+    if (!in_array($file_extension, $allowed_types)) {
+        echo "<script>alert('Jenis file tidak diizinkan. Harap unggah file dengan ekstensi JPG, JPEG, atau PNG.')</script>";
+    } else {
+        // Cek apakah file berhasil diunggah
+        if (move_uploaded_file($file_tmp, 'file_komunitas/'.$logo)) {
+            // File berhasil diunggah, lanjutkan penyimpanan ke database
+        $sqlUpdate = mysqli_query($koneksi, "UPDATE ukm SET deskripsi = '$deskripsi',  sosialmedia = '$sosialmedia', status = '$statusupdate', logo = '$logo' WHERE id_ukm = '$id_ukm'");
 
-	if($sqlUpdate) {
-		echo "<script>
-		window.location.href ='profilkomunitas.php';
-		alert('Data berhasil disimpan');
-		</script>";
-	} else {
-		echo "<script>alert('Ubah data gagal!')</script>";
-	}
+        if($sqlUpdate) {
+            echo "<script>
+            window.location.href ='profilkomunitas.php';
+            alert('Data berhasil disimpan');
+            </script>";
+        } else {
+            echo "<script>alert('Ubah data gagal!')</script>";
+        }
+    }
+}
 }
 ?>
 <!DOCTYPE html>
@@ -108,7 +121,7 @@ if (isset($_POST['ubah'])) {
                 <h3 class="card-title"><?php echo $id_ukm; ?> (<?php echo $status; ?>)</h3>
             </div>
             <div class="card-body">
-            <form action="" method="post">
+            <form action="" method="post" enctype="multipart/form-data">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         <div class="row">
@@ -128,7 +141,12 @@ if (isset($_POST['ubah'])) {
                             <div class="col-md-9"><input type="text" class="form-control" readonly value="<?php echo $password; ?>"></div>
                         </div>
                     </li>
-                    <!-- Mengubah input deskripsi komunitas menjadi textarea -->
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-3"><b>Logo</b></div>
+                            <div class="col-md-9"><input type="file" class="form-control" name="logo" autocomplete="off" required></div>
+                        </div>
+                    </li>
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-md-3"><b>Deskripsi Komunitas</b></div>

@@ -22,9 +22,7 @@ if(mysqli_num_rows($sqlTampil) > 0) {
     $nim = $dataTampil['nim'];
     $alasan_bergabung = $dataTampil['alasan_bergabung'];
     $foto_ektm = $dataTampil['foto_ektm'];
-    $foto_ektm_base64 = base64_encode($foto_ektm);
-    
-    $tgl_permintaan = $dataTampil['tgl_permintaan'];
+    $tgl_permintaan = date('d-m-Y', strtotime($dataTampil['tgl_permintaan']));
 }
 
 if (isset($_POST['ubah'])) {
@@ -137,7 +135,7 @@ if (isset($_POST['ubah'])) {
                         <li class="list-group-item">
                             <div class="row">
                                 <div class="col-md-3"><b>Foto EKTM</b></div>
-                                <div class="col-md-9"><img src="data:image/jpeg;base64,<?php echo $foto_ektm_base64; ?>" class="img-fluid" alt="Foto EKTM"></div>
+                                <div class="col-md-9"><img src="file/<?php echo $foto_ektm; ?>" class="img-fluid" alt="Foto EKTM"></div>
                             </div>
                         </li>
                         <li class="list-group-item">

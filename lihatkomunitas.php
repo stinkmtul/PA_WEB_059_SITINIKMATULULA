@@ -1,4 +1,14 @@
-<?php include 'koneksi.php' ?>
+<?php include 'koneksi.php' ;
+session_start();
+if ($_SESSION['level'] == "") {
+	header("location:index.php");
+} elseif ($_SESSION['level'] != 'user') {
+	echo "<script>
+	window.location.href = 'index.php';
+	alert('Anda tidak memiliki akses untuk masuk kehalaman ini');
+	</script>";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -105,7 +115,7 @@
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-body">
-                        <img src="img/comunity.png" alt="Logo Komunitas" class="ukm-logo">
+                        <img src="file_komunitas/<?php echo $data['logo']; ?>" class="img-fluid" alt="logo">
                         <div class="ukm-info">
                             <p><strong><h3></strong> <?php echo $data['nama_ukm'] ?></p></h3>
                             <p>Anggota : <?php echo $data['jumlah_anggota'] ?></p>

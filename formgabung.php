@@ -11,26 +11,41 @@ if (isset($_POST['simpan'])) {
     $nama_user = $_POST['nama_user'];
     $nim = $_POST['nim'];
     $alasan_bergabung = $_POST['alasan_bergabung'];
-    $foto_ektm = $_POST['foto_ektm'];
+    $foto_ektm = $_FILES['foto_ektm']['name'];
+    $file_tmp = $_FILES['foto_ektm']['tmp_name'];
     $tgl_permintaan = $_POST['tgl_permintaan'];
     $status = $_POST['status'];
 
-    $cekpermintaan = mysqli_query($koneksi, "SELECT * FROM permintaan WHERE id_ukm = '$id_ukm' && id_user = '$id_user'");
-    if (mysqli_num_rows($cekpermintaan) > 0) {
-        echo "<script>
-            window.location.href = 'inbox.php';
-            alert('Anda telah mengirimkan permintaan bergabung di komunitas ini.');
-            </script>";
+    // Batasi jenis file yang diizinkan
+    $allowed_types = array('jpg', 'jpeg', 'png');
+    $file_extension = strtolower(pathinfo($_FILES['foto_ektm']['name'], PATHINFO_EXTENSION));
+    if (!in_array($file_extension, $allowed_types)) {
+        echo "<script>alert('Jenis file tidak diizinkan. Harap unggah file dengan ekstensi JPG, JPEG, atau PNG.')</script>";
     } else {
-        $sqlInsert = mysqli_query($koneksi, "INSERT INTO permintaan (id_permintaan, id_user, id_ukm, nama_user, nim, alasan_bergabung, foto_ektm, tgl_permintaan, status) VALUES ('$id_permintaan', '$id_user', '$id_ukm', '$nama_user', '$nim', '$alasan_bergabung', '$foto_ektm', '$tgl_permintaan', '$status')");
+        // Cek apakah file berhasil diunggah
+        if (move_uploaded_file($file_tmp, 'file/'.$foto_ektm)) {
+            // File berhasil diunggah, lanjutkan penyimpanan ke database
+            $cekpermintaan = mysqli_query($koneksi, "SELECT * FROM permintaan WHERE id_ukm = '$id_ukm' && id_user = '$id_user'");
+            if (mysqli_num_rows($cekpermintaan) > 0) {
+                echo "<script>
+                    window.location.href = 'inbox.php';
+                    alert('Anda telah mengirimkan permintaan bergabung di komunitas ini.');
+                    </script>";
+            } else {
+                $sqlInsert = mysqli_query($koneksi, "INSERT INTO permintaan (id_permintaan, id_user, id_ukm, nama_user, nim, alasan_bergabung, foto_ektm, tgl_permintaan, status) VALUES ('$id_permintaan', '$id_user', '$id_ukm', '$nama_user', '$nim', '$alasan_bergabung', '$foto_ektm', '$tgl_permintaan', '$status')");
 
-        if ($sqlInsert) {
-            echo "<script>
-            window.location.href = 'lihatkomunitas.php';
-            alert('Berhasil membuat permintaan bergabung');
-            </script>";
+                if ($sqlInsert) {
+                    echo "<script>
+                    window.location.href = 'lihatkomunitas.php';
+                    alert('Berhasil membuat permintaan bergabung');
+                    </script>";
+                } else {
+                    echo "<script>alert('Gagal membuat permintaan bergabung')</script>";
+                }
+            }
         } else {
-            echo "<script>alert('Gagal membuat permintaan bergabung')</script>";
+            // Gagal mengunggah file
+            echo "<script>alert('Gagal mengunggah file')</script>";
         }
     }
 }
@@ -99,7 +114,7 @@ if (isset($_POST['simpan'])) {
         <div class="row justify-content-center">
             <div class="col-md-8">
                     <div class="card-body">
-                        <form action="" method="post">
+                        <form action="" method="post" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label class="form-label"><b>Nama user</b></label>
                                 <input type="text" class="form-control" readonly value="<?php echo $id; ?> - <?php echo $_GET['nama']; ?>">
