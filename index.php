@@ -98,20 +98,11 @@ if(isset($_POST['submit'])) {
         .btn-link:hover {
             text-decoration: underline;
         }
-        .error-message {
-            color: red;
-            margin-top: -10px;
-            margin-bottom: 10px;
-            text-align: center;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <center><img src="img/comunity.png" alt="Logo Comunity" width="150px"></center>
-        <?php if(isset($error)) { ?>
-            <p class="error-message"><?php echo $error; ?></p>
-        <?php } ?>
         <form method="POST" action="">
             <div class="form-group">
                 <input type="text" name="username" class="form-control" placeholder="Username" required>

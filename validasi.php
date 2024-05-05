@@ -112,7 +112,7 @@ if (isset($_POST['ubah'])) {
                 <h3 class="card-title"><?php echo $id_permintaan; ?></h3>
             </div>
             <div class="card-body">
-                <form action="" method="post">
+                <form action="" method="post" id="formvalidasi">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
                             <div class="row">
@@ -129,13 +129,13 @@ if (isset($_POST['ubah'])) {
                         <li class="list-group-item">
                             <div class="row">
                                 <div class="col-md-3"><b>Alasan Bergabung</b></div>
-                                <div class="col-md-9"><input type="textarea" class="form-control" readonly value="<?php echo $alasan_bergabung; ?>"></div>
+                                <div class="col-md-9"><textarea class="form-control" rows="3" readonly><?php echo $alasan_bergabung; ?></textarea>
                             </div>
                         </li>
                         <li class="list-group-item">
                             <div class="row">
                                 <div class="col-md-3"><b>Foto EKTM</b></div>
-                                <div class="col-md-9"><img src="file/<?php echo $foto_ektm; ?>" class="img-fluid" alt="Foto EKTM"></div>
+                                <div class="col-md-9"><img src="file/<?php echo $foto_ektm; ?>" style="max-width: 20%; height: auto;" alt="Foto EKTM"></div>
                             </div>
                         </li>
                         <li class="list-group-item">
@@ -158,13 +158,13 @@ if (isset($_POST['ubah'])) {
                         <li class="list-group-item">
                             <div class="row">
                                 <div class="col-md-3"><b>Keterangan</b></div>
-                                <div class="col-md-9"><textarea class="form-control" name="keterangan" rows="3"></textarea></div>
+                                <div class="col-md-9"><textarea class="form-control" name="keterangan" id="keterangan" rows="3"></textarea></div>
                             </div>
                         </li>
                         <input hidden type="text" class="form-control" name="tgl_validasi" readonly value="<?php echo date('Y-m-d'); ?>">
                     </ul>
                     <div id="pesan-sekarang" class="text-right">
-                        <a href="home.php" class="btn btn-danger">Kembali</a>
+                        <a href="permintaanmasuk.php" class="btn btn-danger">Kembali</a>
                         <button type="submit" class="btn btn-primary" name="ubah" onclick="return confirm('Apakah Anda yakin ingin menyimpan perubahan ini?')">Validasi</button>
                     </div>
                 </form>
@@ -172,4 +172,40 @@ if (isset($_POST['ubah'])) {
         </div>
     </div>
 </body>
+<script>
+    // Function to validate input
+    function validateInput(input) {
+        // Regular expression to allow only letters, digits, and spaces in the middle
+        var regex = /^[a-zA-Z0-9]+( [a-zA-Z0-9]+)*$/;
+        return regex.test(input);
+    }
+
+    // Function to trim leading and trailing spaces
+    function trimSpaces(input) {
+        return input.trim();
+    }
+
+    // Function to handle form submission
+    function handleSubmit(event) {
+        var keterangan = document.getElementById('keterangan');
+
+        // Trim leading and trailing spaces
+        keterangan.value = trimSpaces(keterangan.value);
+
+        var isValid = true;
+
+        // Validate nama input
+        if (!validateInput(keterangan.value)) {
+            isValid = false;
+        }
+
+        // Display error message if any input is invalid
+        if (!isValid) { 
+            alert('Inputan hanya boleh berisi huruf dan angka.');
+            event.preventDefault();
+        }
+    }
+    // Add event listener for form submission
+    document.getElementById('formvalidasi').addEventListener('submit', handleSubmit);
+</script>
 </html>

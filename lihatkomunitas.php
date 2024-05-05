@@ -72,7 +72,7 @@ if ($_SESSION['level'] == "") {
             font-size: 1rem;
             color: #555;
         }
-
+            
         /* CSS untuk tombol */
         .btn-social-media,
         .btn-detail {
@@ -81,7 +81,6 @@ if ($_SESSION['level'] == "") {
             border-radius: 20px;
             transition: background-color 0.3s ease;
             margin-right: 10px;
-            color: #fff;
             width: 100%; /* Menentukan lebar tombol */
         }
 
@@ -95,17 +94,21 @@ if ($_SESSION['level'] == "") {
 
         .btn-social-media:hover {
             background-color: #BF2050;
+            color: #fff; /* Warna tulisan menjadi putih saat dihover */
         }
 
         .btn-detail:hover {
             background-color: #388E3C;
+            color: #fff; /* Warna tulisan menjadi putih saat dihover */
         }
+
     </style>
 </head>
 <body>
 <?php include 'navbaruser.php' ?>
 <br><br><br>
 <div class="container">
+    <h3 class="text-center mb-4">Daftar Komunitas</h3>
     <div class="row">
         <?php
         $sql = mysqli_query($koneksi, "SELECT * FROM ukm WHERE status = 'aktif'");
@@ -117,11 +120,11 @@ if ($_SESSION['level'] == "") {
                     <div class="card-body">
                         <img src="file_komunitas/<?php echo $data['logo']; ?>" class="img-fluid" alt="logo">
                         <div class="ukm-info">
-                            <p><strong><h3></strong> <?php echo $data['nama_ukm'] ?></p></h3>
+                            <h3><strong><?php echo $data['nama_ukm'] ?></strong></h3>
                             <p>Anggota : <?php echo $data['jumlah_anggota'] ?></p>
                         </div>
-                        <a href="<?php echo $data['sosialmedia']; ?>" class="btn btn-social-media bi bi-instagram"></a>
-                        <a href="lihatdetail.php?id=<?php echo $data['id_ukm']; ?>&nama=<?php echo urlencode($data['nama_ukm']); ?>" class="btn btn-detail bi bi-hand-index-thumb"> Detail</a>
+                        <a href="<?php echo $data['sosialmedia']; ?>" class="btn btn-social-media fab fa-instagram"></a>
+                        <a href="lihatdetail.php?id=<?php echo $data['id_ukm']; ?>&nama=<?php echo urlencode($data['nama_ukm']); ?>" class="btn btn-detail"> Gabung</a>
                     </div>
                 </div>
             </div>

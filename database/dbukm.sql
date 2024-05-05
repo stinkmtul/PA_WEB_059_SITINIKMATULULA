@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 01, 2024 at 06:26 PM
+-- Generation Time: May 05, 2024 at 04:45 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -46,7 +46,9 @@ CREATE TABLE `permintaan` (
 --
 
 INSERT INTO `permintaan` (`id_permintaan`, `id_user`, `id_ukm`, `nama_user`, `nim`, `alasan_bergabung`, `foto_ektm`, `tgl_permintaan`, `status`, `keterangan`, `tgl_validasi`) VALUES
-('PM001', 'US004', 'UK002', 'Siti Nikmatul', 12, 'test', 'user.png', '2024-05-01', 'di terima', 'yes', '2024-05-01');
+('PM001', 'US004', 'UK001', 'Siti Nikmatul', 123456, 'Saya ingin mengembangkan skill saya dengan bergabung ke ukm ini', 'kartu.jpg', '2024-05-05', 'menunggu', '', '0000-00-00'),
+('PM002', 'US004', 'UK003', 'Siti Nikmatul', 123456, 'Saya ingin mengembangkan skill saya dengan bergabung ke ukm ini', 'kartu.jpg', '2024-05-05', 'di terima', 'memenuhi syarat', '2024-05-05'),
+('PM003', 'US004', 'UK002', 'Siti Nikmatul', 123456, 'Saya merasa cocok untuk gabung diukm ini', 'kartu.jpg', '2024-05-05', 'di tolak', 'ektm tidak valid', '2024-05-05');
 
 -- --------------------------------------------------------
 
@@ -70,8 +72,10 @@ CREATE TABLE `ukm` (
 --
 
 INSERT INTO `ukm` (`id_ukm`, `id_user`, `logo`, `nama_ukm`, `deskripsi`, `sosialmedia`, `status`, `jumlah_anggota`) VALUES
-('UK001', 'US006', 'voli.jpg', 'Voli', 'test', 'test', 'aktif', 20),
-('UK002', 'US007', 'bola.jpg', 'Futsal', 'test', 'test', 'aktif', 21);
+('UK001', 'US006', 'bola.jpg', 'Futsal', 'Komunitas kami didirikan pada tahun 2016 dengan tujuan untuk menginspirasi dan mengembangkan bakat-bakat muda dalam olahraga di antara mahasiswa. Sejak awal berdiri, kami telah menjadi pusat pertemuan bagi para penggemar olahraga di kampus, menyediakan platform inklusif dan mendukung bagi para anggota dari berbagai latar belakang dan tingkat keterampilan.', 'https://www.instagram.com/', 'aktif', 20),
+('UK002', 'US007', 'basket.png', 'Basket', 'Komunitas basket kami adalah wadah yang menyatukan para pecinta basket di lingkungan kampus. Didirikan dengan semangat untuk mengembangkan bakat dan minat dalam olahraga basket, kami telah menjadi pusat kegiatan yang dinamis sejak tahun 2016.', 'https://www.instagram.com/', 'aktif', 20),
+('UK003', 'US008', 'voli.jpg', 'Voli', 'Komunitas kami adalah wadah yang dipersembahkan untuk para pencinta dan pemain voli di lingkungan kampus. Berdiri sejak tahun 2017, komunitas ini telah menjadi pusat kegiatan yang dinamis bagi para mahasiswa yang memiliki minat dalam olahraga voli.', 'https://www.instagram.com/', 'aktif', 21),
+('UK004', 'US009', '', 'Bulu Tangkis', '', '', 'non-aktif', 20);
 
 -- --------------------------------------------------------
 
@@ -95,8 +99,10 @@ INSERT INTO `user` (`id_user`, `nama`, `username`, `password`, `level`) VALUES
 ('US001', 'Super Admin', 'superadmin', '123', 'superadmin'),
 ('US004', 'Siti Nikmatul', 'siti', '123', 'user'),
 ('US005', 'Syahria', 'Ria', '123', 'user'),
-('US006', 'Voli', 'voli', '123', 'adminukm'),
-('US007', 'Futsal', 'futsal', '123', 'adminukm');
+('US006', 'Futsal', 'futsal', '123', 'adminukm'),
+('US007', 'Basket', 'basket', '123', 'adminukm'),
+('US008', 'Voli', 'voli', '123', 'adminukm'),
+('US009', 'Bulu Tangkis', 'bultang', '123', 'adminukm');
 
 --
 -- Indexes for dumped tables

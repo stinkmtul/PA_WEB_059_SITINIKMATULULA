@@ -1,6 +1,14 @@
 <?php 
 include 'koneksi.php';
 session_start();
+if ($_SESSION['level'] == "") {
+    header("location:index.php");
+} elseif ($_SESSION['level'] != 'user') {
+    echo "<script>
+    window.location.href = 'index.php';
+    alert('Anda tidak memiliki akses untuk masuk kehalaman ini');
+    </script>";
+}
 
 $id = isset($_GET['id']) ? mysqli_real_escape_string($koneksi, $_GET['id']) : '';
 
@@ -114,7 +122,7 @@ if (isset($_POST['simpan'])) {
         <div class="row justify-content-center">
             <div class="col-md-8">
                     <div class="card-body">
-                        <form action="" method="post" enctype="multipart/form-data">
+                        <form action="" method="post" enctype="multipart/form-data" id="formgabung">
                             <div class="mb-3">
                                 <label class="form-label"><b>Nama user</b></label>
                                 <input type="text" class="form-control" readonly value="<?php echo $id; ?> - <?php echo $_GET['nama']; ?>">
@@ -155,7 +163,7 @@ if (isset($_POST['simpan'])) {
                             </div>
                             <div class="mb-3">
                                 <label class="form-label"><b>Alasan bergabung</b></label>
-                                <textarea class="form-control" name="alasan_bergabung" id="" cols="10" rows="5" autocomplete="off" placeholder="Masukkan alasan bergabung" required></textarea>
+                                <textarea class="form-control" name="alasan_bergabung" id="alasan_bergabung" cols="10" rows="5" autocomplete="off" placeholder="Masukkan alasan bergabung" required></textarea>
                             </div>
                             <div class="mb-3">
                                 <input type="date" hidden class="form-control" name="tgl_permintaan" autocomplete="off" value="<?php echo date('Y-m-d'); ?>" required>
@@ -171,4 +179,40 @@ if (isset($_POST['simpan'])) {
         </div>
     </div>
 </body>
+<script>
+    // Function to validate input
+    function validateInput(input) {
+        // Regular expression to allow only letters, digits, and spaces in the middle
+        var regex = /^[a-zA-Z0-9]+( [a-zA-Z0-9]+)*$/;
+        return regex.test(input);
+    }
+
+    // Function to trim leading and trailing spaces
+    function trimSpaces(input) {
+        return input.trim();
+    }
+
+    // Function to handle form submission
+    function handleSubmit(event) {
+        var alasanbergabung = document.getElementById('alasan_bergabung');
+
+        // Trim leading and trailing spaces
+        alasanbergabung.value = trimSpaces(alasanbergabung.value);
+
+        var isValid = true;
+
+        // Validate nama input
+        if (!validateInput(alasanbergabung.value)) {
+            isValid = false;
+        }
+
+        // Display error message if any input is invalid
+        if (!isValid) { 
+            alert('Inputan hanya boleh berisi huruf dan angka.');
+            event.preventDefault();
+        }
+    }
+    // Add event listener for form submission
+    document.getElementById('formgabung').addEventListener('submit', handleSubmit);
+</script>
 </html>

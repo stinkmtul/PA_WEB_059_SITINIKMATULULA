@@ -24,26 +24,45 @@ if(mysqli_num_rows($sqlTampil) > 0) {
     $sosialmedia = $dataTampil['sosialmedia'];
     $jumlah_anggota = $dataTampil['jumlah_anggota'];
     $status = $dataTampil['status'];
+    $logo = $dataTampil['logo'];
 } else {
     echo "Data tidak ditemukan";
 }
 if (isset($_POST['ubah'])) {
-	$deskripsi = $_POST['deskripsi'];
-	$sosialmedia = $_POST['sosialmedia'];
+    $deskripsi = $_POST['deskripsi'];
+    $sosialmedia = $_POST['sosialmedia'];
     $statusupdate = $_POST['status'];
-    $logo = $_FILES['logo']['name'];
-    $file_tmp = $_FILES['logo']['tmp_name'];
 
-    // Batasi jenis file yang diizinkan
-    $allowed_types = array('jpg', 'jpeg', 'png');
-    $file_extension = strtolower(pathinfo($_FILES['logo']['name'], PATHINFO_EXTENSION));
-    if (!in_array($file_extension, $allowed_types)) {
-        echo "<script>alert('Jenis file tidak diizinkan. Harap unggah file dengan ekstensi JPG, JPEG, atau PNG.')</script>";
+    // Check if a new logo file has been uploaded
+    if ($_FILES['logo']['size'] > 0) {
+        $logo = $_FILES['logo']['name'];
+        $file_tmp = $_FILES['logo']['tmp_name'];
+
+        // Batasi jenis file yang diizinkan
+        $allowed_types = array('jpg', 'jpeg', 'png');
+        $file_extension = strtolower(pathinfo($_FILES['logo']['name'], PATHINFO_EXTENSION));
+
+        if (!in_array($file_extension, $allowed_types)) {
+            echo "<script>alert('Jenis file tidak diizinkan. Harap unggah file dengan ekstensi JPG, JPEG, atau PNG.')</script>";
+        } else {
+            // Cek apakah file berhasil diunggah
+            if (move_uploaded_file($file_tmp, 'file_komunitas/'.$logo)) {
+                // File berhasil diunggah, lanjutkan penyimpanan ke database
+                $sqlUpdate = mysqli_query($koneksi, "UPDATE ukm SET deskripsi = '$deskripsi',  sosialmedia = '$sosialmedia', status = '$statusupdate', logo = '$logo' WHERE id_ukm = '$id_ukm'");
+
+                if($sqlUpdate) {
+                    echo "<script>
+                    window.location.href ='profilkomunitas.php';
+                    alert('Data berhasil disimpan');
+                    </script>";
+                } else {
+                    echo "<script>alert('Ubah data gagal!')</script>";
+                }
+            }
+        }
     } else {
-        // Cek apakah file berhasil diunggah
-        if (move_uploaded_file($file_tmp, 'file_komunitas/'.$logo)) {
-            // File berhasil diunggah, lanjutkan penyimpanan ke database
-        $sqlUpdate = mysqli_query($koneksi, "UPDATE ukm SET deskripsi = '$deskripsi',  sosialmedia = '$sosialmedia', status = '$statusupdate', logo = '$logo' WHERE id_ukm = '$id_ukm'");
+        // If no new logo file is uploaded, keep the existing logo name
+        $sqlUpdate = mysqli_query($koneksi, "UPDATE ukm SET deskripsi = '$deskripsi',  sosialmedia = '$sosialmedia', status = '$statusupdate' WHERE id_ukm = '$id_ukm'");
 
         if($sqlUpdate) {
             echo "<script>
@@ -54,7 +73,6 @@ if (isset($_POST['ubah'])) {
             echo "<script>alert('Ubah data gagal!')</script>";
         }
     }
-}
 }
 ?>
 <!DOCTYPE html>
@@ -121,12 +139,12 @@ if (isset($_POST['ubah'])) {
                 <h3 class="card-title"><?php echo $id_ukm; ?> (<?php echo $status; ?>)</h3>
             </div>
             <div class="card-body">
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="" method="post" enctype="multipart/form-data" id="formprofil">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-md-3"><b>Nama Ukm</b></div>
-                            <div class="col-md-9"><input type="text" class="form-control" value="<?php echo $nama_ukm; ?>"></div>
+                            <div class="col-md-9"><input type="text" readonly class="form-control" value="<?php echo $nama_ukm; ?>"></div>
                         </div>
                     </li>
                     <li class="list-group-item">
@@ -144,19 +162,24 @@ if (isset($_POST['ubah'])) {
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-md-3"><b>Logo</b></div>
-                            <div class="col-md-9"><input type="file" class="form-control" name="logo" autocomplete="off" required></div>
+                            <div class="col-md-9">
+                            <?php if ($logo) { ?>
+                                <input type="text" class="form-control" readonly value="<?php echo $logo; ?>">
+                            <?php } else { ?>
+                                <input type="file" class="form-control" name="logo" autocomplete="off" required>
+                            <?php } ?> </div>
                         </div>
                     </li>
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-md-3"><b>Deskripsi Komunitas</b></div>
-                            <div class="col-md-9"><textarea class="form-control" name="deskripsi" rows="5"><?php echo $deskripsi; ?></textarea></div>
+                            <div class="col-md-9"><textarea class="form-control" name="deskripsi" id="deskripsi" rows="5"><?php echo $deskripsi; ?></textarea></div>
                         </div>
                     </li>
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-md-3"><b> Url Sosial Media</b></div>
-                            <div class="col-md-9"><input type="text" class="form-control" name="sosialmedia" value="<?php echo $sosialmedia; ?>"></div>
+                            <div class="col-md-9"><input type="text" class="form-control" name="sosialmedia" id="sosialmedia" value="<?php echo $sosialmedia; ?>"></div>
                         </div>
                     </li>
                     <li class="list-group-item">
@@ -186,4 +209,55 @@ if (isset($_POST['ubah'])) {
         </div>
     </div>
 </body>
+<script>
+    // Function to validate input URL
+    function validateURL(input) {
+        // Regular expression to validate URL format
+        var regex = /^(ftp|http|https):\/\/[^ "]+$/;
+        return regex.test(input);
+    }
+
+    // Function to validate input deskripsi
+    function validateInput(input) {
+    // Regular expression to allow letters, digits, spaces, commas, periods, and line breaks, but not if they appear alone
+        var regex = /^(?!([.,\r\n]+)$)[a-zA-Z0-9,. \r\n]*$/;
+        return regex.test(input);
+    }
+
+    // Function to trim leading and trailing spaces
+    function trimSpaces(input) {
+        return input.trim();
+    }
+
+    // Function to handle form submission
+    function handleSubmit(event) {
+        var deskripsi = document.getElementById('deskripsi').value;
+        var sosialmedia = document.getElementById('sosialmedia').value;
+
+        // Trim leading and trailing spaces
+        deskripsi = trimSpaces(deskripsi);
+        sosialmedia = trimSpaces(sosialmedia);
+
+        var isValid = true;
+
+        // Validate URL input
+        if (!validateURL(sosialmedia)) {
+            isValid = false;
+        }
+
+        // Validate deskripsi input 
+        if (!validateInput(deskripsi)) {
+            isValid = false;
+        }
+
+        // Display error message if any input is invalid
+        if (!isValid) {
+            alert('Deskripsi atau url tidak valid');
+            event.preventDefault();
+        }
+    }
+
+    // Add event listener for form submission
+    document.getElementById('formprofil').addEventListener('submit', handleSubmit);
+</script>
 </html>

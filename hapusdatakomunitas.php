@@ -22,7 +22,7 @@ if(isset($_GET['id_ukm']) && isset($_GET['id_user'])) {
     if($hapus_ukm && $hapus_user) {
         echo '<script>
         window.location.href = "datakomunitas.php"; 
-        alert("Data berhasil dihapus dari kedua tabel.");</script>';
+        alert("Data berhasil dihapus");</script>';
     } else {
         echo '<script>
         window.location.href = "datakomunitas.php"; 

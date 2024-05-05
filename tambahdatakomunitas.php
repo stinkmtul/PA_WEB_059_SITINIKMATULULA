@@ -1,4 +1,14 @@
 <?php include 'koneksi.php';
+session_start();
+if ($_SESSION['level'] == "") {
+	header("location:index.php");
+} 
+elseif ($_SESSION['level'] != 'superadmin'){
+	echo "<script>
+	window.location.href = 'index.php';
+	alert('Anda tidak memiliki akses untuk masuk kehalaman ini');
+	</script>";
+}
 
 if (isset($_POST['simpan'])) {
     $id_ukm = $_POST['id_ukm'];
@@ -91,7 +101,7 @@ if (isset($_POST['simpan'])) {
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <br><br><br>
-                <form action="" method="post">
+                <form action="" method="post" id="formUKM">
                 <h3>Data UKM</h3>
                     <div class="mb-3">
                         <?php 
@@ -118,16 +128,16 @@ if (isset($_POST['simpan'])) {
                     </div>
                     <div class="mb-3">
                         <label class="form-label"><b>Nama UKM</b></label>
-                        <input type="text" class="form-control" name="nama_ukm" autocomplete="off" placeholder="Masukkan Nama UKM" required>
+                        <input type="text" class="form-control" name="nama_ukm" id="nama_ukm" autocomplete="off" placeholder="Masukkan Nama UKM" required>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label class="form-label"><b>Username</b></label>
-                            <input type="text" class="form-control" name="username" autocomplete="off" placeholder="Masukkan Username untuk Akun Admin" required>
+                            <input type="text" class="form-control" name="username" id="username" autocomplete="off" placeholder="Masukkan Username untuk Akun Admin" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label"><b>Password</b></label>
-                            <input type="text" class="form-control" name="password" autocomplete="off" placeholder="Masukkan Password untuk Akun Admin" required>
+                            <input type="text" class="form-control" name="password" id="password" autocomplete="off" placeholder="Masukkan Password untuk Akun Admin" required>
                         </div>
                     </div>
                     <input hidden type="text" value="adminukm" class="form-control" name="level" autocomplete="off" required>
@@ -140,4 +150,54 @@ if (isset($_POST['simpan'])) {
         </div>
     </div>
 </body>
+<script>
+    // Function to validate input
+    function validateInput(input) {
+        // Regular expression to allow only letters, digits, and spaces in the middle
+        var regex = /^[a-zA-Z0-9]+( [a-zA-Z0-9]+)*$/;
+        return regex.test(input);
+    }
+
+    // Function to trim leading and trailing spaces
+    function trimSpaces(input) {
+        return input.trim();
+    }
+
+    // Function to handle form submission
+    function handleSubmit(event) {
+        var namaInput = document.getElementById('nama_ukm');
+        var usernameInput = document.getElementById('username');
+        var passwordInput = document.getElementById('password');
+
+        // Trim leading and trailing spaces
+        namaInput.value = trimSpaces(namaInput.value);
+        usernameInput.value = trimSpaces(usernameInput.value);
+        passwordInput.value = trimSpaces(passwordInput.value);
+
+        var isValid = true;
+
+        // Validate nama input
+        if (!validateInput(namaInput.value)) {
+            isValid = false;
+        }
+
+        // Validate username input
+        if (!validateInput(usernameInput.value)) {
+            isValid = false;
+        }
+
+        // Validate password input
+        if (!validateInput(passwordInput.value)) {
+            isValid = false;
+        }
+
+        // Display error message if any input is invalid
+        if (!isValid) { 
+            alert('Inputan hanya boleh berisi huruf dan angka.');
+            event.preventDefault();
+        }
+    }
+    // Add event listener for form submission
+    document.getElementById('formUKM').addEventListener('submit', handleSubmit);
+</script>
 </html>

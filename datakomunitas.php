@@ -89,7 +89,7 @@ elseif ($_SESSION['level'] != 'superadmin'){
         <div class="col-md-11 mx-auto">
             <h3 class="text-center my-4">Data Komunitas</h3>
             <div class="dropdown mb-3">
-                <a class="btn-custom" href="tambahdatakomunitas.php"><i class="fas fa-plus-circle"></i></a>
+                <a class="btn-custom bi bi-plus-circle" href="tambahdatakomunitas.php"></a>
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered">
@@ -119,6 +119,13 @@ elseif ($_SESSION['level'] != 'superadmin'){
                                 <td><?php echo $data['status'] ?></td>
                                 <td>
                                     <a href="hapusdatakomunitas.php?id_ukm=<?php echo $data['id_ukm'] ?>&id_user=<?php echo $data['id_user'] ?>" class="btn btn-danger" onclick="return confirm('Anda tidak akan bisa melihat data ini lagi. Yakin ingin menghapus?');"><i class="fas fa-trash"></i></a>
+                                    <?php 
+                                        if ($data['status'] == 'aktif') { 
+                                            ?>
+                                            <a href="nonaktifkankomunitas.php?id_ukm=<?php echo $data['id_ukm'] ?>" class="btn btn-secondary" onclick="return confirm('Apakah Anda yakin ingin menonaktifkan komunitas ini?');"><i class="fas fa-ban"></i></a>
+                                            <?php 
+                                        } 
+                                        ?>
                                 </td>
                             </tr>
                             <?php

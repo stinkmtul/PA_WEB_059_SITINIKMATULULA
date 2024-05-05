@@ -90,7 +90,6 @@ if(mysqli_num_rows($sqlTampil) > 0) {
                                 <th>No</th>
                                 <th>Nama</th>
                                 <th>Nim</th>
-                                <th>Alasan Bergabung</th>
                                 <th>Tanggal Permintaan</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
@@ -105,7 +104,6 @@ if(mysqli_num_rows($sqlTampil) > 0) {
                                     <td><?php echo $no ?></td>
                                     <td><?php echo $dataPermintaan['nama_user'] ?></td>
                                     <td><?php echo $dataPermintaan['nim'] ?></td>
-                                    <td><?php echo $dataPermintaan['alasan_bergabung'] ?></td>
                                     <td><?php echo date('d-m-Y', strtotime($dataPermintaan['tgl_permintaan'])) ?></td>
                                     <td><?php echo $dataPermintaan['status'] ?></td>
                                     <td>

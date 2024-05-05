@@ -101,7 +101,7 @@ if(mysqli_num_rows($sqlTampil) > 0) {
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-md-3"><b>Deskripsi</b></div>
-                            <div class="col-md-9"><input type="text" class="form-control" readonly value="<?php echo $deskripsi; ?>"></div>
+                            <div class="col-md-9"><textarea name="" class="form-control" cols="20" rows="5" readonly><?php echo $deskripsi; ?></textarea></div>
                         </div>
                     </li>
                     <li class="list-group-item">

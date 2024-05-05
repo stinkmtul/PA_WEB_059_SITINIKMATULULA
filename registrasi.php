@@ -97,7 +97,7 @@ if (isset($_POST['simpan'])) {
 <body>
     <div class="container">
     <center><img src="img/comunity.png" alt="Logo Comunity" width="150px"></center>
-        <form action="" method="post">
+        <form action="" method="post" id="registrationForm">
             <div class="form-group">
                 <?php 
                 $query = mysqli_query($koneksi, "SELECT max(id_user) as kodeTerbesar FROM user");
@@ -114,15 +114,15 @@ if (isset($_POST['simpan'])) {
             </div>
             <div class="form-group">
                 <label>Nama</label>
-                <input type="text" class="form-control" name="nama" autocomplete="off" placeholder="Masukkan Nama" required>
+                <input type="text" class="form-control" id="nama" name="nama" autocomplete="off" placeholder="Masukkan Nama" required>
             </div>
             <div class="form-group">
                 <label>Username</label>
-                <input type="text" class="form-control" name="username" autocomplete="off" placeholder="Masukkan Username" required>
+                <input type="text" class="form-control"  id="username" name="username" autocomplete="off" placeholder="Masukkan Username" required>
             </div>
             <div class="form-group">
                 <label>Password</label>
-                <input type="text" class="form-control" name="password" autocomplete="off" placeholder="Masukkan Password" required>
+                <input type="text" class="form-control" id="password" name="password" autocomplete="off" placeholder="Masukkan Password" required>
             </div>
             <div class="btn-container">
 				<center>
@@ -133,4 +133,54 @@ if (isset($_POST['simpan'])) {
         </form>
     </div>
 </body>
+<script>
+    // Function to validate input
+    function validateInput(input) {
+        // Regular expression to allow only letters, digits, and spaces in the middle
+        var regex = /^[a-zA-Z0-9]+( [a-zA-Z0-9]+)*$/;
+        return regex.test(input);
+    }
+
+    // Function to trim leading and trailing spaces
+    function trimSpaces(input) {
+        return input.trim();
+    }
+
+    // Function to handle form submission
+    function handleSubmit(event) {
+        var namaInput = document.getElementById('nama');
+        var usernameInput = document.getElementById('username');
+        var passwordInput = document.getElementById('password');
+
+        // Trim leading and trailing spaces
+        namaInput.value = trimSpaces(namaInput.value);
+        usernameInput.value = trimSpaces(usernameInput.value);
+        passwordInput.value = trimSpaces(passwordInput.value);
+
+        var isValid = true;
+
+        // Validate nama input
+        if (!validateInput(namaInput.value)) {
+            isValid = false;
+        }
+
+        // Validate username input
+        if (!validateInput(usernameInput.value)) {
+            isValid = false;
+        }
+
+        // Validate password input
+        if (!validateInput(passwordInput.value)) {
+            isValid = false;
+        }
+
+        // Display error message if any input is invalid
+        if (!isValid) {
+            alert('Inputan hanya boleh berisi huruf dan angka.');
+            event.preventDefault();
+        }
+    }
+    // Add event listener for form submission
+    document.getElementById('registrationForm').addEventListener('submit', handleSubmit);
+</script>
 </html>

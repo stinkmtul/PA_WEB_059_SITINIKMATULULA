@@ -3,8 +3,12 @@ include 'koneksi.php';
 
 session_start();
 if ($_SESSION['level'] == "") {
-	header("location:index.php");
-	exit; // Hindari eksekusi kode di bawah jika pengguna tidak terautentikasi
+    header("location:index.php");
+} elseif ($_SESSION['level'] != 'user') {
+    echo "<script>
+    window.location.href = 'index.php';
+    alert('Anda tidak memiliki akses untuk masuk kehalaman ini');
+    </script>";
 }
 
 // Pastikan id permintaan diterima dari parameter GET

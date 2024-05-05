@@ -98,8 +98,8 @@ if(mysqli_num_rows($sqlTampil) > 0) {
                     <div class="card-body">
                     <img src="file_komunitas/<?php echo $dataTampil['logo']; ?>" class="img-fluid" alt="logo">
                         <h5 class="ukm-name"><?php echo $dataTampil['nama_ukm']; ?></h5>
-                        <br>
                         <a href="keluarkomunitas.php?id=<?php echo $dataTampil['id_permintaan']; ?>" class="btn btn-danger bi bi-box-arrow-right"> Keluar Komunitas</a>
+                        <br>
                         <br>
                     </div>
                 </div>
@@ -117,15 +117,14 @@ if(mysqli_num_rows($sqlTampil) > 0) {
 ?>
 
 <?php include 'navbaruser.php'; ?>
-<br><br><br>
+<br><br><br>`
 <div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body text-center">
-                    <img src="img/comunity.png" alt="Logo Comunity" width="150px">
-                    <h3 class="mt-3">Komunitasku</h3>
-                    <p class="mt-3">Belum tergabung di komunitas manapun.</p>
+        <div class="row">
+        <center><img src="img/comunity.png" alt="Logo Comunity" width="150px"></center>
+            <div class="col-md-11" style="margin: 0 auto;">
+                <h3 class="text-center my-4">Komunitasku</h3>
+                <div class="no-request">
+                    <center><p>Belum tergabung di komunitas manapun.</p></center>
                 </div>
             </div>
         </div>

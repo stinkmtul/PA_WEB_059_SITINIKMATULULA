@@ -116,7 +116,7 @@ if(mysqli_num_rows($sqlTampil) > 0) {
                                 <?php elseif ($dataTampil['status'] == 'menunggu'): ?>
                                     -
                                 <?php elseif ($dataTampil['status'] == 'di terima'): ?>
-                                    <a href="keluarkomunitas.php?id=<?php echo $dataTampil['id_permintaan']; ?>" class="btn btn-danger bi bi-box-arrow-right"> Keluar</a>
+                                    <a href="komunitasku.php?id=<?php echo $dataTampil['id_permintaan']; ?>" class="btn btn-success bi bi-arrow-right-circle"> Lebih lanjut</a>
                                 <?php endif; ?>
                             </td>
                         </tr>

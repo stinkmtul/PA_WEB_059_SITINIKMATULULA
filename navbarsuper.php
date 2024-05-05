@@ -61,16 +61,16 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="home.php">Beranda</a>
+                    <a class="nav-link bi bi-house-fill" href="home.php"> Beranda</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="datakomunitas.php">Kelola Data Komunitas</a>
+                    <a class="nav-link bi bi-person-fill-gear" href="datakomunitas.php"> Kelola Data Komunitas</a>
                 </li>
             </ul>
         </div>
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a href="logout.php" class="nav-link">Logout</a>
+                <a href="logout.php" class="nav-link" onclick="return confirm('Yakin ingin logout?');">Logout</a>
             </li>
         </ul>
     </div>
