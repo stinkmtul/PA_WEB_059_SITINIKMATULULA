@@ -164,7 +164,7 @@ if (isset($_POST['ubah'])) {
                             <div class="col-md-3"><b>Logo</b></div>
                             <div class="col-md-9">
                             <?php if ($logo) { ?>
-                                <input type="text" class="form-control" readonly value="<?php echo $logo; ?>">
+                                <img src="file_komunitas/<?php echo $logo; ?>" style="max-width: 30%; height: auto;" alt="Logo">
                             <?php } else { ?>
                                 <input type="file" class="form-control" name="logo" autocomplete="off" required>
                             <?php } ?> </div>

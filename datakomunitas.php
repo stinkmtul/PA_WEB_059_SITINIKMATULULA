@@ -38,10 +38,10 @@ elseif ($_SESSION['level'] != 'superadmin'){
         }
 
         .btn-custom:hover {
-            background-color: #45a049;
+            background-color: #45a049; /* Mengubah warna latar belakang saat tombol dihover */
+            color: white; /* Mengubah warna teks menjadi putih saat tombol dihover */
         }
-
-
+            
         .container-top {
             width: 80%;
             margin: auto;

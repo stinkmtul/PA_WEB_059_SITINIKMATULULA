@@ -32,7 +32,9 @@ if ($_SESSION['level'] == "") {
             transition: transform 0.3s ease;
             background-color: #f8f9fa;
             max-width: 300px;
-            height: 300spx; /* Menentukan ketinggian kartu */
+            height: 400px; /* Menetapkan tinggi tetap untuk kartu */
+            display: flex;
+            flex-direction: column;
         }
 
         .card:hover {
@@ -50,6 +52,24 @@ if ($_SESSION['level'] == "") {
         .card-body {
             padding: 20px;
             text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Menempatkan konten di tengah vertikal */
+        }
+
+        .ukm-info {
+            font-size: 1rem;
+            color: #555;
+            margin-top: auto; /* Letakkan info UKM di bagian bawah kartu */
+        }
+
+        .ukm-logo {
+            width: 150px; /* Tetapkan lebar gambar */
+            height: auto; /* Biarkan tinggi gambar menyesuaikan proporsi */
+            margin: 0 auto;
+            margin-bottom: 20px;
+            display: block;
         }
 
         .ukm-name {
@@ -58,13 +78,7 @@ if ($_SESSION['level'] == "") {
             color: #333;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 20px;
-        }
-
-        .ukm-logo {
-            display: block;
-            margin: 0 auto 20px;
-            width: 150px;
+            margin-bottom: 10px; /* Kurangi margin-bottom untuk nama UKM */
         }
 
         .ukm-info {
@@ -72,36 +86,14 @@ if ($_SESSION['level'] == "") {
             font-size: 1rem;
             color: #555;
         }
-            
+
         /* CSS untuk tombol */
-        .btn-social-media,
-        .btn-detail {
-            font-size: 1rem;
-            padding: 10px 20px;
-            border-radius: 20px;
-            transition: background-color 0.3s ease;
-            margin-right: 10px;
-            width: 100%; /* Menentukan lebar tombol */
+        .btn {
+            border-radius: 30px !important;/* Mengatur bentuk tombol menjadi oval */
+            font-size: 16px; /* Meningkatkan ukuran font */
+            padding: 10px 20px; /* Menambahkan padding pada tombol */
+            margin-left: 5px; /* Menambahkan jarak antara tombol */
         }
-
-        .btn-social-media {
-            background-color: #E1306C;
-        }
-
-        .btn-detail {
-            background-color: #4CAF50;
-        }
-
-        .btn-social-media:hover {
-            background-color: #BF2050;
-            color: #fff; /* Warna tulisan menjadi putih saat dihover */
-        }
-
-        .btn-detail:hover {
-            background-color: #388E3C;
-            color: #fff; /* Warna tulisan menjadi putih saat dihover */
-        }
-
     </style>
 </head>
 <body>
@@ -115,7 +107,7 @@ if ($_SESSION['level'] == "") {
         $count = 0;
         while ($data = mysqli_fetch_array($sql)) {
             ?>
-            <div class="col-md-3">
+            <div class="col-md-3">  
                 <div class="card">
                     <div class="card-body">
                         <img src="file_komunitas/<?php echo $data['logo']; ?>" class="img-fluid" alt="logo">
@@ -123,14 +115,16 @@ if ($_SESSION['level'] == "") {
                             <h3><strong><?php echo $data['nama_ukm'] ?></strong></h3>
                             <p>Anggota : <?php echo $data['jumlah_anggota'] ?></p>
                         </div>
-                        <a href="<?php echo $data['sosialmedia']; ?>" class="btn btn-social-media fab fa-instagram"></a>
-                        <a href="lihatdetail.php?id=<?php echo $data['id_ukm']; ?>&nama=<?php echo urlencode($data['nama_ukm']); ?>" class="btn btn-detail"> Gabung</a>
+                        <div class="button-group">
+                            <a href="<?php echo $data['sosialmedia']; ?>" class="btn btn-danger fab fa-instagram"></a>
+                            <a href="lihatdetail.php?id=<?php echo $data['id_ukm']; ?>&nama=<?php echo urlencode($data['nama_ukm']); ?>" class="btn btn-success">Gabung</a>
+                        </div>
                     </div>
                 </div>
             </div>
             <?php
             $count++;
-            if ($count % 4 == 0) {
+            if ($count % 4 == 0) {      
                 echo '</div><div class="row">';
             }
         }

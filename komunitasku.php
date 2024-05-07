@@ -33,56 +33,49 @@ if(mysqli_num_rows($sqlTampil) > 0) {
         }
 
         .card {
-            margin-bottom: 20px;
             border: none;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
             background-color: #f8f9fa;
-            max-width: 300px;
+            max-width: 270px;
+            height: 370px; /* Menetapkan tinggi tetap untuk kartu */
+            display: flex;
+            flex-direction: column;
         }
 
         .card:hover {
             transform: translateY(-5px);
         }
 
-        .card-header {
-            background-color: #526D82;
-            color: #fff;
-            border-radius: 10px 10px 0 0;
-            padding: 10px;
-            text-align: center;
-        }
-
         .card-body {
             padding: 20px;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Menempatkan konten di tengah vertikal */
+            height: 100%; /* Mengisi seluruh tinggi kartu */
         }
 
         .ukm-logo {
-            display: block;
+            width: auto; /* Biarkan lebar gambar menyesuaikan */
+            max-height: 100%; /* Menetapkan tinggi maksimum gambar */
             margin: 0 auto 20px;
-            width: 150px;
+            display: block;
         }
 
         .ukm-name {
-            font-size: 1.5rem;
+            font-size: 2rem;
             font-weight: bold;
-            color: #333;
-            text-transform: uppercase;
-            margin-bottom: 10px;
+            color: #555;
+            letter-spacing: 1px;
         }
 
-        .btn-danger {
-            background-color: #DC3545;
-            border: none;
-            border-radius: 20px;
-            padding: 8px 16px;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-danger:hover {
-            background-color: #C82333;
+        .btn {
+            border-radius: 30px !important;/* Mengatur bentuk tombol menjadi oval */
+            font-size: 16px; /* Meningkatkan ukuran font */
+            padding: 10px 20px; /* Menambahkan padding pada tombol */
+            margin-left: 5px; /* Menambahkan jarak antara tombol */
         }
     </style>
 </head>
@@ -97,8 +90,8 @@ if(mysqli_num_rows($sqlTampil) > 0) {
                 <div class="card">
                     <div class="card-body">
                     <img src="file_komunitas/<?php echo $dataTampil['logo']; ?>" class="img-fluid" alt="logo">
-                        <h5 class="ukm-name"><?php echo $dataTampil['nama_ukm']; ?></h5>
-                        <a href="keluarkomunitas.php?id=<?php echo $dataTampil['id_permintaan']; ?>" class="btn btn-danger bi bi-box-arrow-right"> Keluar Komunitas</a>
+                        <h3 class="ukm-name"><?php echo $dataTampil['nama_ukm']; ?></h3>
+                        <a href="keluarkomunitas.php?id=<?php echo $dataTampil['id_permintaan']; ?>" class="btn btn-danger bi bi-box-arrow-right"> Keluar</a>
                         <br>
                         <br>
                     </div>
