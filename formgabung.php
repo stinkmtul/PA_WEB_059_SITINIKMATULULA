@@ -124,7 +124,7 @@ if (isset($_POST['simpan'])) {
                     <div class="card-body">
                         <form action="" method="post" enctype="multipart/form-data" id="formgabung">
                             <div class="mb-3">
-                                <label class="form-label"><b>Nama user</b></label>
+                                <label class="form-label"><b>Nama UKM</b></label>
                                 <input type="text" class="form-control" readonly value="<?php echo $id; ?> - <?php echo $_GET['nama']; ?>">
                             </div>
                             <div class="mb-3">
@@ -149,7 +149,7 @@ if (isset($_POST['simpan'])) {
                             while ($data = mysqli_fetch_array($sql)) {
                             ?>
                             <div class="mb-3">
-                                <label class="form-label"><b>Nama user</b></label>
+                                <label class="form-label"><b>Nama User</b></label>
                                 <input type="text" readonly class="form-control" name="nama_user" autocomplete="off" placeholder="Masukkan nama user" value="<?php echo $data['nama']; ?>" required>
                             </div>
                             <?php } ?>
@@ -170,7 +170,7 @@ if (isset($_POST['simpan'])) {
                                 <input type="text" hidden class="form-control" name="status" autocomplete="off" value="menunggu" required>
                             </div>
                             <div class="btn-container">
-                                <button type="submit" class="btn btn-primary" name="simpan"><i class="fas fa-save"></i> Simpan</button>
+                                <button type="submit" class="btn btn-primary" name="simpan"><i class="fas fa-save"></i> Kirim</button>
                                 <a href="lihatdetail.php?id=<?php echo $id; ?>&nama=<?php echo urlencode($_GET['nama']); ?>" class="btn btn-danger"><i class="fas fa-times"></i> Batal</a>
                             </div>
                         </form>
@@ -180,10 +180,9 @@ if (isset($_POST['simpan'])) {
     </div>
 </body>
 <script>
-    // Function to validate input
     function validateInput(input) {
-        // Regular expression to allow only letters, digits, and spaces in the middle
-        var regex = /^[a-zA-Z0-9]+( [a-zA-Z0-9]+)*$/;
+    // Regular expression to allow letters, digits, spaces, commas, periods, and line breaks, but not if they appear alone
+        var regex = /^(?!([.,\r\n]+)$)[a-zA-Z0-9,. \r\n]*$/;
         return regex.test(input);
     }
 

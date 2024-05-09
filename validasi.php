@@ -173,10 +173,9 @@ if (isset($_POST['ubah'])) {
     </div>
 </body>
 <script>
-    // Function to validate input
     function validateInput(input) {
-        // Regular expression to allow only letters, digits, and spaces in the middle
-        var regex = /^[a-zA-Z0-9]+( [a-zA-Z0-9]+)*$/;
+    // Regular expression to allow letters, digits, spaces, commas, periods, and line breaks, but not if they appear alone
+        var regex = /^(?!([.,\r\n]+)$)[a-zA-Z0-9,. \r\n]*$/;
         return regex.test(input);
     }
 
